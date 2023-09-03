@@ -9,3 +9,8 @@ from .employees import (
     Employees, SeniorPermenantStaffBW,
     SeniorPermenantStaffForeigner)
 from .shareholders import Shareholders, ShareholderDetails
+from .vehicles_equipment import Vehicle, VehicleEquipment
+from .projects import (
+    Projects, CompletedProject, OnGoingProject)
+from .company_secretary import (
+    CompanySecretary, PhysicalAddress, PostalAddress)

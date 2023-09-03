@@ -9,7 +9,7 @@ class Shareholders(models.Model):
 
 class ShareholderDetails(models.Model):
     
-    shareholders = models.ForeignKey(shareholders, on_delete=models.CASCADE)
+    shareholders = models.ForeignKey(Shareholders, on_delete=models.CASCADE)
 
     first_name = models.CharField(
         verbose_name="First Name",
