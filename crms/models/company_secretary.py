@@ -17,7 +17,7 @@ class CompanySecretary(SiteModelMixin, BaseUuidModel):
         max_length=200)
     
     bus_phone = models.CharField(
-        verbose_name="usiness Phone no.:",
+        verbose_name="Business Phone no.:",
         max_length=200)
 
     mobile_no = models.CharField(
@@ -36,6 +36,9 @@ class CompanySecretary(SiteModelMixin, BaseUuidModel):
     expiry_date = models.DateTimeField("Expiry Date:")
 
     history = HistoricalRecords()
+
+    def __str__(self):
+        return self.name
 
 
 class PhysicalAddress(SiteModelMixin, BaseUuidModel):

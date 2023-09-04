@@ -51,6 +51,7 @@ class AffiliatesViewSet(viewsets.ModelViewSet):
     queryset = Affiliates.objects.all()
     serializer_class = AffiliatesSerializer
     permission_classes = [permissions.IsAuthenticated]
+    lookup_field = 'affiliate'
 
 
 class DirectorDetailsViewSet(viewsets.ModelViewSet):

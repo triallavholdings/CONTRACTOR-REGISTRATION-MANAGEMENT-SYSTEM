@@ -19,3 +19,6 @@ class Affiliates(SiteModelMixin, BaseUuidModel):
         upload_to ='uploads/% Y/% m/% d/')
 
     history = HistoricalRecords()
+
+    def __str__(self):
+        return self.affiliate

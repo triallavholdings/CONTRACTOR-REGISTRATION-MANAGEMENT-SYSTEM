@@ -32,9 +32,19 @@ class BankerDetailsSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class AffiliatesSerializer(serializers.HyperlinkedModelSerializer):
+    options = serializers.HyperlinkedRelatedField(
+        view_name='option-detail',
+        lookup_field = 'affiliate',
+        many=True,
+        read_only=True)
+
     class Meta:
         model = Affiliates
         fields = '__all__'
+        lookup_field = 'affiliate'
+        extra_kwargs = {
+            'url': {'lookup_field': 'affiliate'}
+        }
         
 
 class DirectorDetailsSerializer(serializers.HyperlinkedModelSerializer):
