@@ -15,7 +15,12 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ETC_DIR = '/etc/'
 
+
+APP_NAME = 'CONTRACTOR REGISTRATION MANAGEMENT SYSTEM'
+
+SITE_ID = 3
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -25,7 +30,7 @@ SECRET_KEY = 'django-insecure-i=zm*s%44xca@t6l^@m7a(!8r2u=dgf9t#c)c&h)3bxk6yvsxu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '159.65.53.221']
+ALLOWED_HOSTS = ['crms.gov.bw', 'localhost', '159.65.53.221']
 
 
 # Application definition
@@ -35,10 +40,19 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "crms.apps.CrmsConfig",
     'rest_framework',
+    'django_js_reverse',
+    'django_extensions',
+    'simple_history',
+    'rest_framework.authtoken',
+    'edc_device.apps.AppConfig',
+    'django_crypto_fields.apps.AppConfig',
+    'django_revision.apps.AppConfig',
+    'CONTRACTOR_REGISTRATION_MANAGEMENT_SYSTEM.apps.EdcBaseAppConfig',
 ]
 
 MIDDLEWARE = [
@@ -47,8 +61,10 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'CONTRACTOR_REGISTRATION_MANAGEMENT_SYSTEM.urls'

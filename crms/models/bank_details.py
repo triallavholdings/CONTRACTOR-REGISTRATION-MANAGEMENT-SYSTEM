@@ -1,7 +1,10 @@
 from django.db import models
+from edc_base.model_managers import HistoricalRecords
+from edc_base.model_mixins import BaseUuidModel
+from edc_base.sites import SiteModelMixin
 
 
-class BankerDetails(models.Model):
+class BankerDetails(SiteModelMixin, BaseUuidModel):
     
     bank_name = models.CharField(
         verbose_name="Name of Bank",
@@ -30,3 +33,5 @@ class BankerDetails(models.Model):
     attachments = models.FileField(
         verbose_name="Attachments e.g Bank confirmation letter",
         upload_to ='uploads/% Y/% m/% d/')
+
+    history = HistoricalRecords()

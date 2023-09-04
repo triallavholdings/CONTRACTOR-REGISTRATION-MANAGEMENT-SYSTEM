@@ -1,13 +1,20 @@
 from django.db import models
+from edc_base.model_managers import HistoricalRecords
+from edc_base.model_mixins import BaseUuidModel
+from edc_base.sites import SiteModelMixin
+
+from django_crypto_fields.fields import IdentityField
 
 
-class Directors(models.Model):
+class Directors(SiteModelMixin, BaseUuidModel):
     
     cipa_id = models.CharField(
         verbose_name="Enter CIPA Unique Identification Number (UIN) Without BW",
         max_length=200)
 
-class DirectorDetails(models.Model):
+    history = HistoricalRecords()
+
+class DirectorDetails(SiteModelMixin, BaseUuidModel):
     
     directors = models.ForeignKey(Directors, on_delete=models.CASCADE)
 
@@ -29,9 +36,7 @@ class DirectorDetails(models.Model):
 
     dob = models.DateTimeField("Date of Birth")
 
-    nationality = models.CharField(
-        verbose_name="Nationality",
-        max_length=200)
+    nationality = IdentityField()
 
     omang = models.CharField(
         verbose_name="Omang No",
@@ -54,3 +59,5 @@ class DirectorDetails(models.Model):
     attachments = models.FileField(
             verbose_name="Attachments e.g Affiliation documents",
             upload_to ='uploads/% Y/% m/% d/')
+
+    history = HistoricalRecords()

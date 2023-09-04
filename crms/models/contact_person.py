@@ -1,7 +1,12 @@
 from django.db import models
+from edc_base.model_managers import HistoricalRecords
+from edc_base.model_mixins import BaseUuidModel
+from edc_base.sites import SiteModelMixin
+
+from django_crypto_fields.fields import IdentityField
 
 
-class ContactPerson(models.Model):
+class ContactPerson(SiteModelMixin, BaseUuidModel):
 
     cipa_id = models.CharField(
         verbose_name="Enter CIPA Unique Identification Number (UIN) Without BW",
@@ -21,9 +26,8 @@ class ContactPerson(models.Model):
 
     dob = models.DateTimeField("Date of Birth")
 
-    email = models.CharField(
-        verbose_name="Email",
-        max_length=200)
+    email = models.EmailField(
+        verbose_name="Email")
 
     cell_phone = models.CharField(
         verbose_name="Cell Phone no",
@@ -41,9 +45,7 @@ class ContactPerson(models.Model):
         verbose_name="Nationality",
         max_length=200)
 
-    omang = models.CharField(
-        verbose_name="Omang No",
-        max_length=200)
+    omang = IdentityField()
 
     expiry_date = models.DateTimeField("Validity of Card")
   
@@ -53,9 +55,9 @@ class ContactPerson(models.Model):
 
 class PrimaryContactPerson(ContactPerson):
     
-    pass
+    history = HistoricalRecords()
 
 
 class SecondaryContactPerson(ContactPerson):
     
-    pass
+    history = HistoricalRecords()

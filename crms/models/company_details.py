@@ -1,7 +1,10 @@
 from django.db import models
+from edc_base.model_managers import HistoricalRecords
+from edc_base.model_mixins import BaseUuidModel
+from edc_base.sites import SiteModelMixin
 
 
-class CompanyDetail(models.Model):
+class CompanyDetail(SiteModelMixin, BaseUuidModel):
     
     local_provider = models.CharField(
         verbose_name="Are you a Local Provider/Contractor?",
@@ -34,3 +37,5 @@ class CompanyDetail(models.Model):
     webpage = models.CharField(
         verbose_name="Webpage",
         max_length=200)
+
+    history = HistoricalRecords()

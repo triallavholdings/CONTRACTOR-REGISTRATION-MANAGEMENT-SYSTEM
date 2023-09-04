@@ -1,7 +1,12 @@
 from django.db import models
+from edc_base.model_managers import HistoricalRecords
+from edc_base.model_mixins import BaseUuidModel
+from edc_base.sites import SiteModelMixin
+
+from django_crypto_fields.fields import IdentityField
 
 
-class CompanySecretary(models.Model):
+class CompanySecretary(SiteModelMixin, BaseUuidModel):
     
     name = models.CharField(
         verbose_name="Name",
@@ -26,14 +31,14 @@ class CompanySecretary(models.Model):
         verbose_name="Nationality",
         max_length=200)
 
-    omang = models.CharField(
-        verbose_name="Omang No.:",
-        max_length=200)
+    omang = IdentityField()
     
     expiry_date = models.DateTimeField("Expiry Date:")
 
+    history = HistoricalRecords()
 
-class PhysicalAddress(models.Model):
+
+class PhysicalAddress(SiteModelMixin, BaseUuidModel):
     
     secretary = models.ForeignKey(CompanySecretary, on_delete=models.CASCADE)
 
@@ -49,8 +54,10 @@ class PhysicalAddress(models.Model):
         verbose_name="Village/Town/City :",
         max_length=200)
 
+    history = HistoricalRecords()
 
-class PostalAddress(models.Model):
+
+class PostalAddress(SiteModelMixin, BaseUuidModel):
     
     secretary = models.ForeignKey(CompanySecretary, on_delete=models.CASCADE)
 
@@ -81,3 +88,5 @@ class PostalAddress(models.Model):
     village_town_city = models.CharField(
         verbose_name="Village/Town/City :",
         max_length=200)
+
+    history = HistoricalRecords()

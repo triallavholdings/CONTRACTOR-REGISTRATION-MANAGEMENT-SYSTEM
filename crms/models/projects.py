@@ -1,4 +1,7 @@
 from django.db import models
+from edc_base.model_managers import HistoricalRecords
+from edc_base.model_mixins import BaseUuidModel
+from edc_base.sites import SiteModelMixin
 
 LOCALITY = (
     ('bobonong', 'Bobonong'),
@@ -8,12 +11,16 @@ LOCALITY = (
     ('dukwi', 'Dukwi'))
 
 
-class Projects(models.Model):
+class Projects(SiteModelMixin, BaseUuidModel):
+
+    cipa_id = models.CharField(
+        verbose_name="Enter CIPA Unique Identification Number (UIN) Without BW",
+        max_length=200)
     
-    pass
+    history = HistoricalRecords()
 
 
-class CompletedProject(models.Model):
+class CompletedProject(SiteModelMixin, BaseUuidModel):
     
     projects = models.ForeignKey(
         Projects, on_delete=models.CASCADE)
@@ -52,6 +59,8 @@ class CompletedProject(models.Model):
     attachments = models.FileField(
             verbose_name="Attachments e.g Project documents",
             upload_to ='uploads/% Y/% m/% d/')
+
+    history = HistoricalRecords()
 
 
 class OnGoingProject(models.Model):
@@ -93,3 +102,5 @@ class OnGoingProject(models.Model):
     attachments = models.FileField(
             verbose_name="Attachments e.g Project documents",
             upload_to ='uploads/% Y/% m/% d/')
+
+    history = HistoricalRecords()

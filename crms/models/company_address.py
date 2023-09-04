@@ -1,7 +1,10 @@
 from django.db import models
+from edc_base.model_managers import HistoricalRecords
+from edc_base.model_mixins import BaseUuidModel
+from edc_base.sites import SiteModelMixin
 
 
-class CompanyAddress(models.Model):
+class CompanyAddress(SiteModelMixin, BaseUuidModel):
 
     cipa_id = models.CharField(
         verbose_name="Enter CIPA Unique Identification Number (UIN) Without BW",
@@ -35,3 +38,5 @@ class CompanyAddress(models.Model):
     box_number = models.CharField(
         verbose_name="Box Number",
         max_length=200)
+
+    history = HistoricalRecords()

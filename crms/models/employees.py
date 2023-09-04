@@ -1,7 +1,12 @@
 from django.db import models
+from edc_base.model_managers import HistoricalRecords
+from edc_base.model_mixins import BaseUuidModel
+from edc_base.sites import SiteModelMixin
+
+from django_crypto_fields.fields import IdentityField
 
 
-class Employees(models.Model):
+class Employees(SiteModelMixin, BaseUuidModel):
     
     cipa_id = models.CharField(
         verbose_name="Enter CIPA Unique Identification Number (UIN) Without BW",
@@ -19,7 +24,9 @@ class Employees(models.Model):
         verbose_name="Total Employeed",
         max_length=200)
 
-class SeniorPermenantStaffBW(models.Model):
+    history = HistoricalRecords()
+
+class SeniorPermenantStaffBW(SiteModelMixin, BaseUuidModel):
     
     employees = models.ForeignKey(Employees, on_delete=models.CASCADE)
 
@@ -57,8 +64,10 @@ class SeniorPermenantStaffBW(models.Model):
             verbose_name="Attachments e.g Affiliation documents",
             upload_to ='uploads/% Y/% m/% d/')
 
+    history = HistoricalRecords()
 
-class SeniorPermenantStaffForeigner(models.Model):
+
+class SeniorPermenantStaffForeigner(SiteModelMixin, BaseUuidModel):
     
     employees = models.ForeignKey(Employees, on_delete=models.CASCADE)
 
@@ -76,9 +85,8 @@ class SeniorPermenantStaffForeigner(models.Model):
 
     dob = models.DateTimeField("Date of Birth")
 
-    passport_number = models.CharField(
-        verbose_name="Passport Number",
-        max_length=200)
+    passport_number = IdentityField(
+        verbose_name="Passport Number")
 
     work_permit = models.CharField(
         verbose_name="Work Permit Number",
@@ -101,3 +109,5 @@ class SeniorPermenantStaffForeigner(models.Model):
     attachments = models.FileField(
             verbose_name="Attachments e.g Affiliation documents",
             upload_to ='uploads/% Y/% m/% d/')
+
+    history = HistoricalRecords()

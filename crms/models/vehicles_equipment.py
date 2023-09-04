@@ -1,7 +1,10 @@
 from django.db import models
+from edc_base.model_managers import HistoricalRecords
+from edc_base.model_mixins import BaseUuidModel
+from edc_base.sites import SiteModelMixin
 
 
-class VehicleEquipment(models.Model):
+class VehicleEquipment(SiteModelMixin, BaseUuidModel):
     
     asserts_value = models.CharField(
         verbose_name="Value of total of Company Assets in BWP:",
@@ -19,7 +22,10 @@ class VehicleEquipment(models.Model):
         verbose_name="Total Employeed",
         max_length=200)
 
-class Vehicle(models.Model):
+    history = HistoricalRecords()
+
+
+class Vehicle(SiteModelMixin, BaseUuidModel):
     
     vehicle_equipment = models.ForeignKey(
         VehicleEquipment, on_delete=models.CASCADE)
@@ -60,8 +66,10 @@ class Vehicle(models.Model):
             verbose_name="Attachments e.g Ownership documents",
             upload_to ='uploads/% Y/% m/% d/')
 
+    history = HistoricalRecords()
 
-class PlantEquipment(models.Model):
+
+class PlantEquipment(SiteModelMixin, BaseUuidModel):
     
     vehicle_equipment = models.ForeignKey(
         VehicleEquipment, on_delete=models.CASCADE)
@@ -94,8 +102,10 @@ class PlantEquipment(models.Model):
             verbose_name="Attachments e.g Plant Equipment documents",
             upload_to ='uploads/% Y/% m/% d/')
 
+    history = HistoricalRecords()
 
-class OfficeEquipments(models.Model):
+
+class OfficeEquipments(SiteModelMixin, BaseUuidModel):
     
     vehicle_equipment = models.ForeignKey(
         VehicleEquipment, on_delete=models.CASCADE)
@@ -111,3 +121,5 @@ class OfficeEquipments(models.Model):
     attachments = models.FileField(
             verbose_name="Attachments e.g Affiliation documents",
             upload_to ='uploads/% Y/% m/% d/')
+
+    history = HistoricalRecords()
